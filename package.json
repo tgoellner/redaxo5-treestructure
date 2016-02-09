@@ -1,0 +1,31 @@
+{
+  "name": "Rex5_Treestructure",
+  "version": "0.1.0",
+  "author": "Thomas Goellner",
+  "private": true,
+  "description": "Enables tree view mode on categories and articles and easy drag&drop functionality",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^3.0.3",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-jade": "^0.15.0",
+    "grunt-contrib-less": "^1.1.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-shell": "^1.1.2",
+    "grunt-text-replace": "^0.4.0",
+    "jade": "^1.11.0",
+    "load-grunt-tasks": "^3.3.0"
+  },
+  "JS": ["app"],
+  "prefix": "",
+  "jsnamespace": "kassenwart",
+  "jsfResourceDir": "",
+  "dstdir": "dst",
+  "theme": "treestructure",
+  "folders": {
+    "dev": "assets/",
+    "stage": "assets/"
+  }
+}
