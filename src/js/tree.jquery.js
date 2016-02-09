@@ -931,6 +931,7 @@ MouseWidget = (function(superClass) {
   };
 
   MouseWidget.prototype._handleMouseDown = function(e, position_info) {
+    
     if (MouseWidget.is_mouse_handled) {
       return;
     }
@@ -941,12 +942,12 @@ MouseWidget = (function(superClass) {
     if (!this._mouseCapture(position_info)) {
       return;
     }
-    this._handleStartMouse();
+    this._handleStartMouse(e);
     this.is_mouse_handled = true;
     return true;
   };
 
-  MouseWidget.prototype._handleStartMouse = function() {
+  MouseWidget.prototype._handleStartMouse = function(e) {
     var $document;
     $document = $(document);
     $document.bind('mousemove.mousewidget', $.proxy(this._mouseMove, this));
@@ -1048,6 +1049,7 @@ MouseWidget = (function(superClass) {
 
   MouseWidget.prototype._touchMove = function(e) {
     var touch;
+                e.preventDefault();
     if (e.originalEvent.touches.length > 1) {
       return;
     }

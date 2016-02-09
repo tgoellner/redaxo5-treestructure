@@ -9,11 +9,6 @@ var rex_treestructure = {
 	is_touch : "ontouchstart" in document.documentElement,
 
 	init : function() {
-
-/*
-		GhostDropHint.prototype.moveInsideOpenFolder = function() {
-    return $(this.node.children[0].element).before(this.$ghost);
-  };*/
 		this.createEvents();
 		this.createTree();
 		if(this.is_touch) {
@@ -225,7 +220,6 @@ var rex_treestructure = {
 		else {
 			formData = Object.keys(data).map(function(k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }).join('&');
 		}
-console.log($.param(data));
 
 		var request = new XMLHttpRequest();
 		request.open(tree.attr('method') || 'GET', tree.attr('action'), true);
@@ -458,15 +452,18 @@ console.log($.param(data));
 					}
 
 					if(moved_node.type == 'article' && moved_node.parent.id == target_node.id) {
+						// cannot move element when it is already within target category
 						return false;
 					}
 
 					if(moved_node.permissions.match(/cannot-move/) && moved_node.parent.id != target_node.id) {
+						// can only move element within its parent category (permissions!)
 						return false;
 					}
 				}
 				else {
 					if(moved_node.permissions.match(/cannot-move/) && moved_node.parent.id != target_node.parent.id) {
+						// can only move element within its parent category (permissions!)
 						return false;
 					}
 				}
@@ -520,10 +517,6 @@ console.log($.param(data));
 					}
 				}
 
-				if(position == 'inside' && moved_node.parent.id == target_node.id) {
-					// return false;
-				}
-
 				if(position == 'inside' && target_node.children.length) {
 					position = 'after';
 
@@ -560,7 +553,7 @@ console.log($.param(data));
 				if(node.cat_perm) {
 					$li.addClass('is--allowed');
 				}
-console.log(node.permissions);
+
 				if(node.permissions) {
 					$li.addClass(node.permissions);
 				}

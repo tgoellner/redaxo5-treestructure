@@ -10,59 +10,8 @@
  * @var rex_addon $this
  */
 
-// basic request vars
-$category_id = rex_request('category_id', 'int');
-$article_id = rex_request('article_id', 'int');
 $clang = rex_request('clang', 'int');
-$ctype = rex_request('ctype', 'int');
-
-// additional request vars
-$artstart = rex_request('artstart', 'int');
-$catstart = rex_request('catstart', 'int');
-$edit_id = rex_request('edit_id', 'int');
-$function = rex_request('function', 'string');
-
-$info = '';
-$warning = '';
-
-$category_id = rex_category::get($category_id) ? $category_id : 0;
-$article_id = rex_article::get($article_id) ? $article_id : 0;
 $clang = rex_clang::exists($clang) ? $clang : rex_clang::getStartId();
-
-// --------------------------------------------- Mountpoints
-
-$mountpoints = rex::getUser()->getComplexPerm('structure')->getMountpoints();
-if (count($mountpoints) == 1 && $category_id == 0) {
-    // Nur ein Mointpoint -> Sprung in die Kategory
-    $category_id = current($mountpoints);
-}
-
-// --------------------------------------------- Rechte prüfen
-$KATPERM = rex::getUser()->getComplexPerm('structure')->hasCategoryPerm($category_id);
-
-#echo rex_treestructure::isAllowed(15, 'category');
-#die();
-
-$stop = false;
-if (rex_clang::count() > 1) {
-    if (!rex::getUser()->getComplexPerm('clang')->hasPerm($clang)) {
-        $stop = true;
-        foreach (rex_clang::getAllIds() as $key) {
-            if (rex::getUser()->getComplexPerm('clang')->hasPerm($key)) {
-                $clang = $key;
-                $stop = false;
-                break;
-            }
-        }
-
-        if ($stop) {
-            echo rex_view::error('You have no permission to this area');
-            exit;
-        }
-    }
-} else {
-    $clang = rex_clang::getStartId();
-}
 
 $context = new rex_context([
     'page' => 'treestructure',
@@ -70,7 +19,7 @@ $context = new rex_context([
 ]);
 
 // --------------------- Extension Point
-echo rex_extension::registerPoint(new rex_extension_point('PAGE_STRUCTURE_HEADER_PRE', '', [
+echo rex_extension::registerPoint(new rex_extension_point('PAGE_TREESTRUCTURE_HEADER_PRE', '', [
     'context' => $context,
 ]));
 
@@ -105,14 +54,14 @@ $echo.='<span class="treestructure--options--status rex-icon rex-icon-online" ti
 
 $echo.='<span class="treestructure--options-extras">';
 $echo.='<span class="treestructure--options--delete rex-icon rex-icon-delete" data-confirm="' . rex_i18n::msg('treestructure_confirm_deletion') . '" title="' . rex_i18n::msg('delete') . '">' . rex_i18n::msg('delete') . '</span>';
-$echo.='<span class="treestructure--options--metadata rex-icon rex-icon-metainfo" title="' . rex_i18n::msg('metadata') . '">' . rex_i18n::msg('metadata') . '</span>';
+
+if(rex_addon::get('metainfo')->isAvailable()) {
+	$echo.='<span class="treestructure--options--metadata rex-icon rex-icon-metainfo" title="' . rex_i18n::msg('metadata') . '">' . rex_i18n::msg('metadata') . '</span>';
+}
+
 $echo.='<span class="treestructure--options--functions rex-icon rex-icon-metafuncs" title="' . rex_i18n::msg('metafuncs') . '">' . rex_i18n::msg('metafuncs') . '</span>';
 $echo.='</span>';
 $echo.= '</span>';
-
-// -------------- STATUS_TYPE Map
-$catStatusTypes = rex_category_service::statusTypes();
-$artStatusTypes = rex_article_service::statusTypes();
 
 // --------------------------------------------- API MESSAGES
 echo rex_api_function::getMessage();
