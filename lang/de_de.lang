@@ -8,6 +8,7 @@ treestructure_new_article = Neuer Artikel
 treestructure_new_article_save = speichern
 treestructure_toggle_dropdown = Menü ein- und ausklappen
 treestructure_cancel = Abbrechen
+treestructure_template = Seiten-Template
 
 treestructure_new_article_added = Der Artikel »{0}« wurde angelegt.
 treestructure_new_article_not_added = Der Artikel »{0}« konnte nicht angelegt werden.

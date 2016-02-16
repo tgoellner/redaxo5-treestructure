@@ -8,6 +8,7 @@ treestructure_new_article = New article
 treestructure_new_article_save = save
 treestructure_toggle_dropdown = Expand/collapse navigation
 treestructure_cancel = cancel
+treestructure_template = Page template
 
 treestructure_new_article_added = Article »{0}« has been created.
 treestructure_new_article_not_added = Article »{0}« could not be created.

@@ -3,6 +3,11 @@ title: Changelog
 name: changelog
 ---
 
+##### 1.0.2 beta (february 16 2016)
+
+* fixed creating new categories and articles on root level
+* updated template selector in edit mode
+
 ##### 1.0 beta (february 9 2016)
 
 * initial version

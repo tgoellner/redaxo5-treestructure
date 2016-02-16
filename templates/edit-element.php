@@ -10,10 +10,12 @@
 		return;
 	}
 	if($category_id >= 0) {
-		if(!is_object($category = rex_category::get($category_id))) {
+		if(is_object($category = rex_category::get($category_id))) {
+			$active_template_id = $category->getTemplateId();
+		}
+		elseif($category_id>0) {
 			return;
 		}
-		$active_template_id = $category->getTemplateId();
 	}
 	else if($id >= 0) {
 		if(!is_object($article = rex_article::get($id))) {
@@ -40,15 +42,16 @@
 				<span class="caret"></span>
 				<span class="sr-only"><?php echo rex_i18n::msg('treestructure_toggle_dropdown'); ?></span>
 			</button>
-			<ul class="dropdown-menu dropdown-menu-right">
+			<div class="dropdown-menu dropdown-menu-right">
+				<div class="btn-group" data-toggle="buttons">
+					<span class="btn-group-title"><?php echo rex_i18n::msg('treestructure_template'); ?></span>
 				<?php foreach($templates as $template_id => $template_name): ?>
-				<li class="radio">
-					<label>
+					<label class="btn btn-default<?php if($active_template_id == $template_id) echo ' active' ?>">
 						<input type="radio" name="template_id" value="<?php echo $template_id; ?>"<?php if($active_template_id == $template_id) echo ' checked="checked"' ?>/><?php echo htmlspecialchars($template_name); ?>
 					</label>
-				</li>
 				<?php endforeach; ?>
-			</ul>
+				</div>
+			</div>
 			<?php
 				}
 				unset($templates, $template_id, $template_name);
